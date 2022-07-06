@@ -1,6 +1,5 @@
 const express = require("express");
-const { check, validationResult }
-    = require('express-validator');
+const { check, validationResult } = require("express-validator");
 const router = express.Router();
 const mongoose = require("mongoose");
 const Product = require("../models/product");
@@ -9,11 +8,12 @@ require("dotenv").config();
 const checkAuth = require("../middleware/check-auth");
 
 const formatRupiah = (money) => {
-  return new Intl.NumberFormat('id-ID',
-    { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }
-  ).format(money);
-}
-
+  return new Intl.NumberFormat("id-ID", {
+    style: "currency",
+    currency: "IDR",
+    minimumFractionDigits: 0,
+  }).format(money);
+};
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -66,7 +66,7 @@ router.get("/", (req, res, next) => {
     });
 });
 
-router.post("/", upload.single("picture"), (req, res, next) => {
+router.post("/", checkAuth, upload.single("picture"), (req, res, next) => {
   const product = new Product({
     _id: new mongoose.Types.ObjectId(),
     product: new mongoose.Types.ObjectId(),
@@ -118,22 +118,28 @@ router.get("/:id", (req, res, next) => {
     });
 });
 
+router.put(
+  "/:id",
+  checkAuth,
+  [
+    check("name", "name length should be 5 to 50 characters").isLength({
+      min: 5,
+      max: 50,
+    }),
+    check("price", "price length should be 3 to 20 characters").isLength({
+      min: 3,
+      max: 20,
+    }),
+  ],
+  (req, res) => {
+    const errors = validationResult(req);
 
-
-router.put("/:id",[
-  check('name', 'name length should be 5 to 50 characters')
-                  .isLength({ min: 5, max: 50 }),
-  check('price', 'price length should be 10 to 20 characters')
-                  .isLength({ min: 3, max: 20 })
-], (req, res) => {
-  const errors = validationResult(req);
-
-  if (!errors.isEmpty()) {
+    if (!errors.isEmpty()) {
       return res.status(400).json({
-          success: false,
-          errors: errors.mapped()
+        success: false,
+        errors: errors.mapped(),
       });
-  }
+    }
 
     const id = req.params.id;
     const product = {
@@ -147,12 +153,12 @@ router.put("/:id",[
           res.status(200).json({
             message: "Product edited successfully",
           });
+        }
+      });
+  }
+);
 
-
-}});
-})
-
-router.delete("/:id", (req, res, next) => {
+router.delete("/:id", checkAuth, (req, res, next) => {
   const id = req.params.id;
   Product.deleteOne({ _id: id })
     .exec()

@@ -1,30 +1,26 @@
-import React, { useState} from "react";
+import React, { useState } from "react";
 import axios from "axios";
-import { useNavigate,useParams } from "react-router-dom";
-
-
+import { useNavigate, useParams } from "react-router-dom";
 
 const EditProduct = () => {
   const params = useParams();
-  const [name, setName] = useState(params.name??'');
+  const [name, setName] = useState(params.name ?? "");
   const [price, setPrice] = useState(params.price);
   const { id } = useParams();
   const navigate = useNavigate();
-
 
   const updateProduct = async (e) => {
     e.preventDefault();
     try {
       await axios.put(`/products/${id}`, {
         name,
-        price
+        price,
       });
       navigate("/");
     } catch (error) {
       console.log(error);
     }
   };
-
 
   return (
     <div className="columns mt-5 is-centered">
@@ -42,7 +38,6 @@ const EditProduct = () => {
               />
             </div>
           </div>
-  
           <div className="field">
             <label className="label">Price</label>
             <div className="control">
@@ -56,11 +51,11 @@ const EditProduct = () => {
             </div>
           </div>
           <div className="columns mt-3 is-centered">
-          <div className="field">
-            <button type="submit" className="button is-success">
-              Update
-            </button>
-          </div>
+            <div className="field">
+              <button type="submit" className="button is-success">
+                Update
+              </button>
+            </div>
           </div>
         </form>
       </div>

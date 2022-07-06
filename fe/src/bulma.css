@@ -1771,7 +1771,7 @@ fieldset[disabled] .button {
   align-items: center;
   display: flex;
   flex-wrap: wrap;
-  justify-content: flex-start;
+  justify-content: flex-end;
 }
 .buttons .button {
   margin-bottom: 0.5rem;
@@ -4314,7 +4314,8 @@ fieldset[disabled] .select select:hover {
 }
 .card-content {
   background-color: transparent;
-  padding: 1.5rem;
+  padding: 0.6rem;
+
 }
 .card-footer {
   background-color: transparent;
@@ -4329,7 +4330,7 @@ fieldset[disabled] .select select:hover {
   flex-grow: 1;
   flex-shrink: 0;
   justify-content: center;
-  padding: 0.75rem;
+  padding: 1rem;
 }
 .card-footer-item:not(:last-child) {
   border-right: 1px solid #ededed;
@@ -4855,10 +4856,12 @@ button.dropdown-item.is-active {
 .navbar.is-white {
   background-color: #fff;
   color: #0a0a0a;
+  position: relative;
 }
 .navbar.is-white .navbar-brand .navbar-link,
 .navbar.is-white .navbar-brand > .navbar-item {
   color: #0a0a0a;
+  position: relative;
 }
 .navbar.is-white .navbar-brand .navbar-link.is-active,
 .navbar.is-white .navbar-brand .navbar-link:focus,
@@ -5545,7 +5548,8 @@ html.has-navbar-fixed-bottom {
   transform: translateY(-5px) rotate(-45deg);
 }
 .navbar-menu {
-  display: none;
+  display: inline;
+  position: relative;
 }
 .navbar-item,
 .navbar-link {
@@ -6375,7 +6379,7 @@ label.panel-block:hover {
   flex-flow: column wrap;
   justify-content: center;
   flex-direction: row;
-  padding: 0.75rem;
+  padding: 0.8rem;
 }
 .columns.is-mobile > .column.is-narrow {
   flex: none;
@@ -7167,7 +7171,7 @@ label.panel-block:hover {
   }
   .column.is-3-desktop {
     flex: none;
-    width: 25%;
+    width: 24%;
   }
   .column.is-offset-3-desktop {
     margin-left: 25%;

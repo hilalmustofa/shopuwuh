@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import axios from "axios";
+import myAxios from "./myAxios";
 import { useNavigate, useParams } from "react-router-dom";
 
 const EditProduct = () => {
@@ -12,7 +12,7 @@ const EditProduct = () => {
   const updateProduct = async (e) => {
     e.preventDefault();
     try {
-      await axios.put(`/products/${id}`, {
+      await myAxios.put(`/products/${id}`, {
         name,
         price,
       });

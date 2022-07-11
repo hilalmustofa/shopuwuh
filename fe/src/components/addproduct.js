@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import myAxios from "./myAxios";
 
 const AddProduct = () => {
   const [newUser, setNewAuthor] = useState({
@@ -13,11 +13,11 @@ const AddProduct = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const formData = new FormData();
-    formData.append("picture", newUser.picture);
-    formData.append("price", newUser.price);
     formData.append("name", newUser.name);
+    formData.append("price", newUser.price);
+    formData.append("picture", newUser.picture);
 
-    axios
+    myAxios
       .post("/products", formData)
       .then((res) => {
         console.log(res);

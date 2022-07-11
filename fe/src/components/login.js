@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
+
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -16,7 +17,7 @@ const Login = () => {
     const data = await response.data;
     if (data) {
       navigate("/");
-      localStorage.setItem("token", JSON.stringify(data.token));
+      localStorage.setItem('token', JSON.stringify(data.token));
       window.location.reload();
     } else {
       console.log();

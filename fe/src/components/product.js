@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import myAxios from "./myAxios";
 import { Link } from "react-router-dom";
+
+
+const token = localStorage.getItem('token');
 
 const ProductList = () => {
   const [products, setProduct] = useState([]);
@@ -15,12 +19,11 @@ const ProductList = () => {
 
     if (user) {
       setCurrentUser(user);
-      console.log(user);
     }
   }, []);
 
   const getCurrentUser = () => {
-    return JSON.parse(localStorage.getItem("token"));
+    return JSON.parse(token);
   };
 
   const getProducts = async () => {
@@ -28,9 +31,10 @@ const ProductList = () => {
     setProduct(response.data.products);
   };
 
+
   const deleteProduct = async (id) => {
     try {
-      await axios.delete(`/products/${id}`);
+      await myAxios.delete(`/products/${id}`);
       getProducts();
     } catch (error) {
       console.log(error);

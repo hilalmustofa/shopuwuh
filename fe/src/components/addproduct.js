@@ -3,19 +3,19 @@ import { useNavigate } from "react-router-dom";
 import myAxios from "./myAxios";
 
 const AddProduct = () => {
-  const [newUser, setNewAuthor] = useState({
+  const [newProduct, setNewProduct] = useState({
     name: "",
     price: "",
-    picture: "",
+    picture: ""
   });
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
     const formData = new FormData();
-    formData.append("name", newUser.name);
-    formData.append("price", newUser.price);
-    formData.append("picture", newUser.picture);
+    formData.append("name", newProduct.name);
+    formData.append("price", newProduct.price);
+    formData.append("picture", newProduct.picture);
 
     myAxios
       .post("/products", formData)
@@ -29,11 +29,11 @@ const AddProduct = () => {
   };
 
   const handleChange = (e) => {
-    setNewAuthor({ ...newUser, [e.target.name]: e.target.value });
+    setNewProduct({ ...newProduct, [e.target.name]: e.target.value });
   };
 
   const handlePhoto = (e) => {
-    setNewAuthor({ ...newUser, picture: e.target.files[0].name });
+    setNewProduct({ ...newProduct, picture: e.target.files[0] });
   };
 
   return (
@@ -48,7 +48,7 @@ const AddProduct = () => {
                 className="input"
                 placeholder="Name"
                 name="name"
-                value={newUser.name}
+                value={newProduct.name}
                 onChange={handleChange}
               />
             </div>
@@ -60,7 +60,7 @@ const AddProduct = () => {
               className="input"
               placeholder="Price"
               name="price"
-              value={newUser.price}
+              value={newProduct.price}
               onChange={handleChange}
             />
           </div>
@@ -72,7 +72,6 @@ const AddProduct = () => {
                   class="file-input"
                   type="file"
                   onChange={handlePhoto}
-                  style={{ display: "none" }}
                 />
                 <span class="file-cta">
                   <i class="fas fa-upload"></i>

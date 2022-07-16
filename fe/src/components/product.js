@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import myAxios from "./myAxios";
 import { Link } from "react-router-dom";
+import baseUrl from "./baseurl";
 
 
 const token = localStorage.getItem('token');
@@ -27,14 +28,14 @@ const ProductList = () => {
   };
 
   const getProducts = async () => {
-    const response = await axios.get("/api/products");
+    const response = await axios.get(baseUrl+"/api/products");
     setProduct(response.data.products);
   };
 
 
   const deleteProduct = async (id) => {
     try {
-      await myAxios.delete(`/api/products/${id}`);
+      await myAxios.delete(baseUrl+`/api/products/${id}`);
       getProducts();
     } catch (error) {
       console.log(error);

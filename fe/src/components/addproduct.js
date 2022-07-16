@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import myAxios from "./myAxios";
+import baseUrl from "./baseurl";
 
 const AddProduct = () => {
   const [newProduct, setNewProduct] = useState({
@@ -18,7 +19,7 @@ const AddProduct = () => {
     formData.append("picture", newProduct.picture);
 
     myAxios
-      .post("/api/products", formData)
+      .post(baseUrl+"/api/products", formData)
       .then((res) => {
         console.log(res);
         navigate("/");

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import myAxios from "./myAxios";
 import { useNavigate, useParams } from "react-router-dom";
+import baseUrl from "./baseurl";
 
 const EditProduct = () => {
   const params = useParams();
@@ -12,7 +13,7 @@ const EditProduct = () => {
   const updateProduct = async (e) => {
     e.preventDefault();
     try {
-      await myAxios.put(`/api/products/${id}`, {
+      await myAxios.put(baseUrl+`/api/products/${id}`, {
         name,
         price,
       });

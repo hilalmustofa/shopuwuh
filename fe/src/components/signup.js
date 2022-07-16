@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import baseUrl from "./baseurl";
 
 const Signup = () => {
   const [email, setEmail] = useState("");
@@ -9,13 +10,13 @@ const Signup = () => {
 
   const saveUser = async (e) => {
     e.preventDefault();
-    const response = await axios.post("/api//users/signup", {
+    const response = await axios.post(baseUrl+"/api//users/signup", {
       email,
       password,
     });
     const data = await response.data;
     if (data) {
-      navigate("/api/users/login");
+      navigate("/users/login");
     }
   };
 

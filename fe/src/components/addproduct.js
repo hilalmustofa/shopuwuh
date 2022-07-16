@@ -18,7 +18,7 @@ const AddProduct = () => {
     formData.append("picture", newProduct.picture);
 
     myAxios
-      .post("/products", formData)
+      .post("/api/products", formData)
       .then((res) => {
         console.log(res);
         navigate("/");

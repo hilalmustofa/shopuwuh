@@ -151,7 +151,12 @@ router.put(
       .then((result) => {
         if (result.modifiedCount == 1) {
           res.status(200).json({
-            message: "Product edited successfully",
+            message: "Product edited successfully"
+          });
+        } else {
+          res.status(404).json({
+            error: "Error ngab",
+            message: "Product not found"
           });
         }
       });

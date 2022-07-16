@@ -9,13 +9,13 @@ const Signup = () => {
 
   const saveUser = async (e) => {
     e.preventDefault();
-    const response = await axios.post("/users/signup", {
+    const response = await axios.post("/api//users/signup", {
       email,
       password,
     });
     const data = await response.data;
     if (data) {
-      navigate("/users/login");
+      navigate("/api/users/login");
     }
   };
 

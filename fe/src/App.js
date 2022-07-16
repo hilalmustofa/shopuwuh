@@ -6,6 +6,7 @@ import AddProduct from "./components/addproduct";
 import EditProduct from "./components/editproduct";
 import Login from "./components/login";
 import Signup from "./components/signup";
+import NotFound from "./components/index";
 
 function App() {
   const [currentUser, setCurrentUser] = useState(undefined);
@@ -25,7 +26,7 @@ function App() {
 
   const logout = () => {
     localStorage.removeItem("token");
-    window.location.reload();
+    window.location.href = "/"
   };
 
   return (
@@ -61,10 +62,11 @@ function App() {
 
       <Routes>
         <Route path="/" element={<ProductList />} />
-        <Route path="/users/login" element={<Login />} />
-        <Route path="/users/signup" element={<Signup />} />
-        <Route path="/products/add" element={<AddProduct />} />
-        <Route path="/products/:id" element={<EditProduct />} />
+        <Route exact path="/users/login" element={<Login />} />
+        <Route exact path="/users/signup" element={<Signup />} />
+        <Route exact path={`/products/add`} element={<AddProduct />} />
+        <Route exact path="/products/:id" element={<EditProduct />} />
+        <Route path={"*"} element={<NotFound />} />
       </Routes>
 
       <footer class="footer">

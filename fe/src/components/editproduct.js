@@ -12,7 +12,7 @@ const EditProduct = () => {
   const updateProduct = async (e) => {
     e.preventDefault();
     try {
-      await myAxios.put(`/products/${id}`, {
+      await myAxios.put(`/api/products/${id}`, {
         name,
         price,
       });

@@ -27,14 +27,14 @@ const ProductList = () => {
   };
 
   const getProducts = async () => {
-    const response = await axios.get("/products");
+    const response = await axios.get("/api/products");
     setProduct(response.data.products);
   };
 
 
   const deleteProduct = async (id) => {
     try {
-      await myAxios.delete(`/products/${id}`);
+      await myAxios.delete(`/api/products/${id}`);
       getProducts();
     } catch (error) {
       console.log(error);

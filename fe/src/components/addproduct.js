@@ -10,6 +10,7 @@ const AddProduct = () => {
     picture: ""
   });
   const navigate = useNavigate();
+  const [error, setError] = useState(null);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -24,8 +25,9 @@ const AddProduct = () => {
         console.log(res);
         navigate("/");
       })
-      .catch((err) => {
-        console.log(err);
+      .catch((error) => {
+        console.log(error.response.data.error.message)
+        setError(error.response.data.error.message);
       });
   };
 
@@ -51,18 +53,20 @@ const AddProduct = () => {
                 name="name"
                 value={newProduct.name}
                 onChange={handleChange}
+                required
               />
             </div>
           </div>
           <label className="label">Price</label>
           <div className="control">
             <input
-              type="input"
+              type="number"
               className="input"
               placeholder="Price"
               name="price"
               value={newProduct.price}
               onChange={handleChange}
+              required
             />
           </div>
 
@@ -73,6 +77,7 @@ const AddProduct = () => {
                   class="file-input"
                   type="file"
                   onChange={handlePhoto}
+                  required
                 />
                 <span class="file-cta">
                   <i class="fas fa-upload"></i>
@@ -81,6 +86,7 @@ const AddProduct = () => {
               </label>
             </div>
           </div>
+          { error && <p class="help is-danger"> {error} </p>}
 
           <div className="column">
             <div className="field">

@@ -36,6 +36,7 @@ const EditProduct = () => {
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 placeholder="Name"
+                required
               />
             </div>
           </div>
@@ -43,11 +44,12 @@ const EditProduct = () => {
             <label className="label">Price</label>
             <div className="control">
               <input
-                type="text"
+                type="number"
                 className="input"
                 value={price}
                 onChange={(e) => setPrice(e.target.value)}
                 placeholder="Price"
+                required
               />
             </div>
           </div>

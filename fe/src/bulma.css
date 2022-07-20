@@ -2957,6 +2957,9 @@ a.tag:hover {
   text-align: center;
   vertical-align: top;
 }
+.input[type=number]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
 .input,
 .select select,
 .textarea {

@@ -16,9 +16,9 @@ app.use(morgan('dev'));
 app.use('/uploads', express.static('uploads'));
 app.use(express.static(path.join(__dirname, "/fe/build")));
 
-// app.get('*', (req, res) => {
-//   res.sendFile(path.join(__dirname, '/fe/build', 'index.html'));
-// });
+ app.get('*', (req, res) => {
+   res.sendFile(path.join(__dirname, '/fe/build', 'index.html'));
+ });
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 

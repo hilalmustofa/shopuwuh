@@ -8,27 +8,33 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+  const [error, setError] = useState(null);
 
-  const saveUser = async (e) => {
+  const saveUser = (e) => {
     e.preventDefault();
-    const response = await axios.post(baseUrl+"/api/users/login", {
+    axios
+    .post(baseUrl+"/api/users/login", {
       email,
       password,
-    });
-    const data = await response.data;
-    if (data) {
+    })
+    .then((res) => {
       navigate("/");
-      localStorage.setItem('token', JSON.stringify(data.token));
+      localStorage.setItem('token', JSON.stringify(res.data.token));
       window.location.reload();
-    } else {
-      console.log();
-    }
-    navigate("/");
-    console.log(response);
+      console.log(res)
+    })
+    .catch((error) => {
+      console.log(error)
+      setError(error.response.data.message);
+    });
   };
 
   return (
-    <div className="columns mt-5 is-centered">
+<div>
+    <div className="columns is-mobile mt-2 is-centered">
+    { error && <div class="notification is-danger is-light"> {error}</div>} 
+    </div>
+    <div className="columns mt-2 is-centered">
       <div className="column is-half">
         <form onSubmit={saveUser}>
           <div className="field">
@@ -64,6 +70,7 @@ const Login = () => {
           </div>
         </form>
       </div>
+    </div>
     </div>
   );
 };

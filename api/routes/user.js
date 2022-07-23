@@ -52,7 +52,7 @@ router.post("/login", (req, res, next) => {
     .then((user) => {
       if (user.length < 1) {
         return res.status(401).json({
-          message: "Auth failed",
+          message: "Email is not registered",
         });
       }
       bcrypt.compare(req.body.password, user[0].password, (err, result) => {
@@ -78,7 +78,7 @@ router.post("/login", (req, res, next) => {
           });
         }
         return res.status(401).json({
-          message: "Auth failed 2",
+          message: "Incorrect password",
         });
       });
     })

@@ -66,7 +66,26 @@ router.get("/", (req, res, next) => {
     });
 });
 
-router.post("/", checkAuth, upload.single("picture"), (req, res, next) => {
+router.post("/", 
+[checkAuth, upload.single("picture"),
+check("name", "name length should be 5 to 50 characters").isLength({
+  min: 5,
+  max: 50,
+}),
+check("price", "price length should be 3 to 20 characters").isLength({
+  min: 3,
+  max: 20,
+}),
+], (req, res) => {
+  const errors = validationResult(req);
+
+  if (!errors.isEmpty()) {
+    return res.status(400).json({
+      success: false,
+      errors: "Name or Price should be at least 3 chars and max 50 chars",
+    });
+  }
+
   const product = new Product({
     _id: new mongoose.Types.ObjectId(),
     product: new mongoose.Types.ObjectId(),
@@ -134,7 +153,7 @@ router.put(
     if (!errors.isEmpty()) {
       return res.status(400).json({
         success: false,
-        errors: errors.mapped(),
+        errors: "Name or Price should be at least 3 chars and max 50 chars",
       });
     }
 

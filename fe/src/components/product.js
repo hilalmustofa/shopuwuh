@@ -10,6 +10,7 @@ const token = localStorage.getItem('token');
 const ProductList = () => {
   const [products, setProduct] = useState([]);
   const [currentUser, setCurrentUser] = useState(undefined);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     getProducts();
@@ -38,7 +39,8 @@ const ProductList = () => {
       await myAxios.delete(baseUrl+`/api/products/${id}`);
       getProducts();
     } catch (error) {
-      console.log(error);
+      console.log(error.response.data.error.message)
+        setError(error.response.data.error.message);
     }
   };
 
@@ -74,6 +76,7 @@ const ProductList = () => {
                           Delete
                         </button>
                       </p>
+                      { error && <p class="help is-danger"> {error} </p>}
                     </footer>
                   )}
                 </div>

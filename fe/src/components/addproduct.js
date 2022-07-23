@@ -26,8 +26,7 @@ const AddProduct = () => {
         navigate("/");
       })
       .catch((error) => {
-        console.log(error.response.data.error.message)
-        setError(error.response.data.error.message);
+        setError(error.response.data.errors);
       });
   };
 
@@ -40,7 +39,12 @@ const AddProduct = () => {
   };
 
   return (
-    <div className="column mt-5 is-centered">
+    <div>
+    <div className="columns is-mobile mt-2 is-centered">
+    { error && <div class="notification is-danger is-light"> {error}</div>} 
+    </div>
+   
+    <div className="column mt-2 is-centered">
       <div className="column is-half">
         <form onSubmit={handleSubmit} encType="multipart/form-data">
           <div className="field">
@@ -53,7 +57,6 @@ const AddProduct = () => {
                 name="name"
                 value={newProduct.name}
                 onChange={handleChange}
-                required
               />
             </div>
           </div>
@@ -66,7 +69,6 @@ const AddProduct = () => {
               name="price"
               value={newProduct.price}
               onChange={handleChange}
-              required
             />
           </div>
 
@@ -86,8 +88,6 @@ const AddProduct = () => {
               </label>
             </div>
           </div>
-          { error && <p class="help is-danger"> {error} </p>}
-
           <div className="column">
             <div className="field">
               <button type="submit" className="button is-success">
@@ -97,6 +97,7 @@ const AddProduct = () => {
           </div>
         </form>
       </div>
+    </div>
     </div>
   );
 };

@@ -9,6 +9,7 @@ const EditProduct = () => {
   const [price, setPrice] = useState(params.price);
   const { id } = useParams();
   const navigate = useNavigate();
+  const [error, setError] = useState(null);
 
   const updateProduct = async (e) => {
     e.preventDefault();
@@ -19,13 +20,18 @@ const EditProduct = () => {
       });
       navigate("/");
     } catch (error) {
-      console.log(error);
+        setError(error.response.data.errors);
     }
   };
 
   return (
-    <div className="columns mt-5 is-centered">
-      <div className="column is-half">
+    <div>
+    <div className="columns is-mobile mt-2 is-centered">
+    { error && <div class="notification is-danger is-light"> {error}</div>} 
+    </div>
+   
+    <div className="columns is-mobile mt-2 is-centered">
+      <div className="column is-half">     
         <form onSubmit={updateProduct}>
           <div className="field">
             <label className="label">Name</label>
@@ -36,7 +42,6 @@ const EditProduct = () => {
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 placeholder="Name"
-                required
               />
             </div>
           </div>
@@ -49,7 +54,6 @@ const EditProduct = () => {
                 value={price}
                 onChange={(e) => setPrice(e.target.value)}
                 placeholder="Price"
-                required
               />
             </div>
           </div>
@@ -63,6 +67,7 @@ const EditProduct = () => {
         </form>
       </div>
     </div>
+</div>
   );
 };
 

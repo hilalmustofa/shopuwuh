@@ -42,7 +42,7 @@ const upload = multer({
 
 router.get("/", (req, res, next) => {
   Product.find()
-    .select("name price _id product picture")
+    .select("name description price _id product picture")
     .exec()
     .then((result) => {
       const response = {
@@ -51,6 +51,7 @@ router.get("/", (req, res, next) => {
           return {
             id: result.id,
             name: result.name,
+            description: result.description,
             price: result.price,
             picture: "https://shopuwuh.herokuapp.com/" + result.picture,
           };
@@ -69,8 +70,12 @@ router.get("/", (req, res, next) => {
 router.post("/", 
 [checkAuth, upload.single("picture"),
 check("name", "name length should be 5 to 50 characters").isLength({
-  min: 5,
+  min: 4,
   max: 50,
+}),
+check("description", "price length should be 3 to 20 characters").isLength({
+  min: 3,
+  max: 200,
 }),
 check("price", "price length should be 3 to 20 characters").isLength({
   min: 3,
@@ -90,6 +95,7 @@ check("price", "price length should be 3 to 20 characters").isLength({
     _id: new mongoose.Types.ObjectId(),
     product: new mongoose.Types.ObjectId(),
     name: req.body.name,
+    description: req.body.description,
     price: formatRupiah(req.body.price),
     picture: req.file.path,
   });
@@ -102,6 +108,7 @@ check("price", "price length should be 3 to 20 characters").isLength({
         product: {
           id: result.id,
           name: result.name,
+          description: result.description,
           price: result.price,
           picture: "https://shopuwuh.herokuapp.com/" + result.picture,
         },
@@ -115,7 +122,7 @@ check("price", "price length should be 3 to 20 characters").isLength({
 router.get("/:id", (req, res, next) => {
   const id = req.params.id;
   Product.findById(id)
-    .select("name price id picture")
+    .select("name description price id picture")
     .exec()
     .then((result) => {
       if (result) {
@@ -124,6 +131,7 @@ router.get("/:id", (req, res, next) => {
           product: {
             id: result.id,
             name: result.name,
+            description: result.description,
             price: result.price,
             picture: "https://shopuwuh.herokuapp.com/" + result.picture,
           },
@@ -160,6 +168,7 @@ router.put(
     const id = req.params.id;
     const product = {
       name: req.body.name,
+      description: req.body.description,
       price: formatRupiah(req.body.price),
     };
     Product.updateOne({ _id: id }, { $set: product })

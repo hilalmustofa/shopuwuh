@@ -45,20 +45,26 @@ const ProductList = () => {
   };
 
   return (
-    <div>
-      <section class="section">
-        <div class="container">
-          <h3 class="title has-text-centered is-size-4">All Products</h3>
-          <div class=" column is-centered ">
+    <section class="section is-mobile">
+    <div class="container mt-2 is-mobile">
+      <h3 class="title has-text-centered is-size-4">All Products</h3>
+      <div class="columns is-centered is-multiline">
             {products?.map((product) => (
-              <div class="column is-10-mobile is-3-tablet is-3-desktop is-variable">
-                <div class="card">
-                  <div class="card-image">
+              <div class="columns is-8-mobile is-2-tablet is-2-desktop">
+              <div class="card">
+                <div class="card-image">
+                <Link
+                          to={`/products/detail/${product.id}`}
+                          className=""
+                        >
                     <img src={product.picture} alt="gambar"></img>
+                    </Link>
                   </div>
                   <div class="card-content">
                     <p>{product.price}</p>
-                    <p class="title is-size-5 centered">{product.name}</p>
+                    <Link
+                          to={`/products/detail/${product.id}`}
+                          className="title is-size-5 centered">{product.name}</Link>
                   </div>
                   {currentUser && (
                     <footer class="card-footer">
@@ -85,15 +91,14 @@ const ProductList = () => {
           </div>
 
           {currentUser && (
-            <div class="column is-centered">
+            <div class="columns is-mobile mt-6 is-centered">
               <Link to={`/products/add`} className="button is-success">
                 Add New
               </Link>
             </div>
           )}
         </div>
-      </section>
-    </div>
+        </section>
   );
 };
 export default ProductList;

@@ -7,6 +7,7 @@ const AddProduct = () => {
   const [newProduct, setNewProduct] = useState({
     name: "",
     price: "",
+    description: "",
     picture: ""
   });
   const navigate = useNavigate();
@@ -17,6 +18,7 @@ const AddProduct = () => {
     const formData = new FormData();
     formData.append("name", newProduct.name);
     formData.append("price", newProduct.price);
+    formData.append("description", newProduct.description);
     formData.append("picture", newProduct.picture);
 
     myAxios
@@ -40,12 +42,13 @@ const AddProduct = () => {
 
   return (
     <div>
-    <div className="columns is-mobile mt-2 is-centered">
+      <section class="section is-mobile">
+    <div className="columns mt-0 is-mobile is-centered">
     { error && <div class="notification is-danger is-light"> {error}</div>} 
     </div>
    
-    <div className="column mt-2 is-centered">
-      <div className="column is-half">
+    <div className="columns mt-2 is-centered">
+      <div className="columns is-mobile is-centered">
         <form onSubmit={handleSubmit} encType="multipart/form-data">
           <div className="field">
             <label className="label">Name</label>
@@ -60,6 +63,17 @@ const AddProduct = () => {
               />
             </div>
           </div>
+          <label className="label">Decription</label>
+          <div className="control">
+            <input
+              type="text"
+              className="input"
+              placeholder="Decription"
+              name="description"
+              value={newProduct.description}
+              onChange={handleChange}
+            />
+          </div>
           <label className="label">Price</label>
           <div className="control">
             <input
@@ -70,9 +84,8 @@ const AddProduct = () => {
               value={newProduct.price}
               onChange={handleChange}
             />
-          </div>
-
-          <div className="column mt-3 is-centered">
+          </div>         
+          <div className="columns mt-3 is-centered">
             <div class="file is-centered">
               <label class="file-label">
                 <input
@@ -88,16 +101,15 @@ const AddProduct = () => {
               </label>
             </div>
           </div>
-          <div className="column">
-            <div className="field">
+          <div className="columns is-mobile mt-4 is-centered">
               <button type="submit" className="button is-success">
                 Submit
               </button>
             </div>
-          </div>
         </form>
       </div>
     </div>
+    </section>
     </div>
   );
 };

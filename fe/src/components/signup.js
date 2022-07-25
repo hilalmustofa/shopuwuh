@@ -21,8 +21,9 @@ const Signup = () => {
   };
 
   return (
-    <div className="columns mt-5 is-centered">
-      <div className="column is-half">
+    <div>
+<section class="section is-mobile">
+    <div className="columns is-mobile mt-0 is-centered">
         <form onSubmit={saveUser}>
           <div className="field">
             <label className="label">Email</label>
@@ -50,13 +51,16 @@ const Signup = () => {
               />
             </div>
           </div>
+          <div className="columns is-mobile mt-4 is-centered">
           <div className="field has-text-centered">
             <button type="submit" className="button is-success">
               Signup
             </button>
           </div>
+          </div>
         </form>
       </div>
+      </section>
     </div>
   );
 };

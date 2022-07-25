@@ -7,6 +7,7 @@ import EditProduct from "./components/editproduct";
 import Login from "./components/login";
 import Signup from "./components/signup";
 import NotFound from "./components/index";
+import Detail from "./components/detail";
 
 function App() {
   const [currentUser, setCurrentUser] = useState(undefined);
@@ -26,21 +27,27 @@ function App() {
 
   const logout = () => {
     localStorage.removeItem("token");
-    window.location.href = "/"
+    window.location.href = "/";
   };
+
+
+
 
   return (
     <div>
       <nav class="navbar is-white has-shadow">
         <div class="navbar-brand">
           <a class="navbar-item" href="/">
-            <img src="https://i.imgur.com/NWaVdpH.png" alt="logo" />
+            <img src="https://i.imgur.com/WP8wDHr.png" alt="logo" />
+          </a>
+          <a class="navbar-burger" id="burger">
+            <span></span>
+            <span></span>
+            <span></span>
           </a>
         </div>
-
-        <div class="navbar-end">
-          <div class="navbar-item">
-            <div class="buttons">
+        <div class="navbar-menu" id="nav-links">
+        <div class="navbar-item">
               {currentUser ? (
                 <button class="button is-small is-danger" onClick={logout}>
                   Logout
@@ -57,7 +64,6 @@ function App() {
               )}
             </div>
           </div>
-        </div>
       </nav>
 
       <Routes>
@@ -66,6 +72,7 @@ function App() {
         <Route exact path="/users/signup" element={<Signup />} />
         <Route exact path={`/products/add`} element={<AddProduct />} />
         <Route exact path="/products/:id" element={<EditProduct />} />
+        <Route exact path="/products/detail/:id" element={<Detail />} />
         <Route path={"*"} element={<NotFound />} />
       </Routes>
 

@@ -31,11 +31,12 @@ const Login = () => {
 
   return (
 <div>
-    <div className="columns is-mobile mt-2 is-centered">
+<section class="section is-mobile">
+    <div className="columns is-mobile mt-0 is-centered">
     { error && <div class="notification is-danger is-light"> {error}</div>} 
     </div>
-    <div className="columns mt-2 is-centered">
-      <div className="column is-half">
+    <div className="columns mt-0 is-centered">
+      <div className="columns is-mobile">
         <form onSubmit={saveUser}>
           <div className="field">
             <label className="label">Email</label>
@@ -63,15 +64,19 @@ const Login = () => {
               />
             </div>
           </div>
+          <div className="columns is-mobile mt-4 is-centered">
           <div className="field has-text-centered">
             <button type="submit" className="button is-success">
               Login
             </button>
           </div>
+          </div>
         </form>
       </div>
     </div>
+    </section>
     </div>
+
   );
 };
 

@@ -6,6 +6,7 @@ import baseUrl from "./baseurl";
 const EditProduct = () => {
   const params = useParams();
   const [name, setName] = useState(params.name ?? "");
+  const [description, setDescription] = useState(params.description ?? "");
   const [price, setPrice] = useState(params.price);
   const { id } = useParams();
   const navigate = useNavigate();
@@ -16,7 +17,8 @@ const EditProduct = () => {
     try {
       await myAxios.put(baseUrl+`/api/products/${id}`, {
         name,
-        price,
+        description,
+        price
       });
       navigate("/");
     } catch (error) {
@@ -26,12 +28,13 @@ const EditProduct = () => {
 
   return (
     <div>
-    <div className="columns is-mobile mt-2 is-centered">
+      <section class="section is-mobile">
+    <div className="columns mt-0 is-mobile is-centered">
     { error && <div class="notification is-danger is-light"> {error}</div>} 
     </div>
    
-    <div className="columns is-mobile mt-2 is-centered">
-      <div className="column is-half">     
+    <div className="columns mt-2 is-centered">
+      <div className="columns is-mobile is-centered">    
         <form onSubmit={updateProduct}>
           <div className="field">
             <label className="label">Name</label>
@@ -42,6 +45,18 @@ const EditProduct = () => {
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 placeholder="Name"
+              />
+            </div>
+          </div>
+          <div className="field">
+            <label className="label">Description</label>
+            <div className="control">
+              <input
+                type="text"
+                className="input"
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+                placeholder="Description"
               />
             </div>
           </div>
@@ -57,16 +72,15 @@ const EditProduct = () => {
               />
             </div>
           </div>
-          <div className="columns mt-3 is-centered">
-            <div className="field">
+          <div className="columns is-mobile mt-4 is-centered">
               <button type="submit" className="button is-success">
                 Update
               </button>
             </div>
-          </div>
         </form>
       </div>
     </div>
+    </section>
 </div>
   );
 };

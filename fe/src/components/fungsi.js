@@ -1,20 +1,3 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { BrowserRouter } from 'react-router-dom';
-import App from './App';
-import "./bulma.css";
-
-
-ReactDOM.render(
-  <React.StrictMode>
-    <BrowserRouter>
-    <App/>
-    </BrowserRouter>
-  </React.StrictMode>,
-  document.getElementById('root')
-);
-
-
 // mobile menu
 const burgerIcon = document.querySelector('#burger');
 const navbarMenu = document.querySelector('#nav-links');

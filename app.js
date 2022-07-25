@@ -14,11 +14,8 @@ mongoose.connect(process.env.MONGODB_CONNECTION_STRING)
 
 app.use(morgan('dev'));
 app.use('/uploads', express.static('uploads'));
-app.use(express.static(path.join(__dirname, "/fe/build")));
+app.use(express.static(path.join(__dirname, 'fe/build')));
 
-//  app.get('*', (req, res) => {
-//    res.sendFile(path.join(__dirname, '/fe/build', 'index.html'));
-//  });
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
@@ -37,18 +34,9 @@ app.use('/api/products', productRoutes);
 app.use('/api/orders', orderRoutes);
 app.use('/api/users', userRoutes);
 
-app.use((req, res, next) => {
-    const err = new Error('Not found');
-    err.status = 404;
-    next(err);
-})
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '/fe/build/index.html'));
+});
 
-app.use((err, req, res, next) =>{
-    res.status(err.status || 500);
-    res.json({
-        error : {
-            message: err.message
-        }
-    })
-})
+
 module.exports = app;

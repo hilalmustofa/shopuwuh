@@ -8,12 +8,15 @@ import Login from "./components/login";
 import Signup from "./components/signup";
 import NotFound from "./components/index";
 import Detail from "./components/detail";
+import Loading from "./components/loading";
 
 function App() {
   const [currentUser, setCurrentUser] = useState(undefined);
+  const [loading, setLoading] = useState(undefined);
 
   useEffect(() => {
     const user = getCurrentUser();
+    setTimeout(() => setLoading(true), 650)
 
     if (user) {
       setCurrentUser(user);
@@ -25,14 +28,10 @@ function App() {
     return JSON.parse(localStorage.getItem("token"));
   };
 
-
-  
   const logout = () => {
     localStorage.removeItem("token");
     window.location.href = "/";
   };
-
-
 
 
   return (
@@ -67,7 +66,7 @@ function App() {
             </div>
           </div>
       </nav>
-
+      {loading ? (  
       <Routes>
         <Route path="/" element={<ProductList />} />
         <Route exact path="/users/login" element={<Login />} />
@@ -77,7 +76,7 @@ function App() {
         <Route exact path="/products/detail/:id" element={<Detail />} />
         <Route path={"*"} element={<NotFound />} />
       </Routes>
-
+      ) : (<Loading loading={loading} /> )}
       <footer class="footer">
         <div class="content has-text-centered is-small">
           <p>

@@ -25,6 +25,8 @@ function App() {
     return JSON.parse(localStorage.getItem("token"));
   };
 
+
+  
   const logout = () => {
     localStorage.removeItem("token");
     window.location.href = "/";

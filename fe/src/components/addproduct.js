@@ -22,7 +22,7 @@ const AddProduct = () => {
     formData.append("picture", newProduct.picture);
 
     myAxios
-      .post(baseUrl+"/api/products", formData)
+      .post(baseUrl + "/api/products", formData)
       .then((res) => {
         console.log(res);
         navigate("/");
@@ -43,73 +43,73 @@ const AddProduct = () => {
   return (
     <div>
       <section class="section is-mobile">
-    <div className="columns mt-0 is-mobile is-centered">
-    { error && <div class="notification is-danger is-light"> {error}</div>} 
-    </div>
-   
-    <div className="columns mt-2 is-centered">
-      <div className="columns is-mobile is-centered">
-        <form onSubmit={handleSubmit} encType="multipart/form-data">
-          <div className="field">
-            <label className="label">Name</label>
-            <div className="control">
-              <input
-                type="text"
-                className="input"
-                placeholder="Name"
-                name="name"
-                value={newProduct.name}
-                onChange={handleChange}
-              />
-            </div>
-          </div>
-          <label className="label">Decription</label>
-          <div className="control">
-            <input
-              type="text"
-              className="input"
-              placeholder="Decription"
-              name="description"
-              value={newProduct.description}
-              onChange={handleChange}
-            />
-          </div>
-          <label className="label">Price</label>
-          <div className="control">
-            <input
-              type="number"
-              className="input"
-              placeholder="Price"
-              name="price"
-              value={newProduct.price}
-              onChange={handleChange}
-            />
-          </div>         
-          <div className="columns mt-3 is-centered">
-            <div class="file is-centered">
-              <label class="file-label">
+        <div className="columns mt-0 is-mobile is-centered">
+          {error && <div class="notification is-danger is-light"> {error}</div>}
+        </div>
+
+        <div className="columns mt-2 is-centered">
+          <div className="columns is-mobile is-centered">
+            <form onSubmit={handleSubmit} encType="multipart/form-data">
+              <div className="field">
+                <label className="label">Name</label>
+                <div className="control">
+                  <input
+                    type="text"
+                    className="input"
+                    placeholder="Name"
+                    name="name"
+                    value={newProduct.name}
+                    onChange={handleChange}
+                  />
+                </div>
+              </div>
+              <label className="label">Decription</label>
+              <div className="control">
                 <input
-                  class="file-input"
-                  type="file"
-                  onChange={handlePhoto}
-                  required
+                  type="text"
+                  className="input"
+                  placeholder="Decription"
+                  name="description"
+                  value={newProduct.description}
+                  onChange={handleChange}
                 />
-                <span class="file-cta">
-                  <i class="fas fa-upload"></i>
-                  <span class="file-label">Choose a photo...</span>
-                </span>
-              </label>
-            </div>
+              </div>
+              <label className="label">Price</label>
+              <div className="control">
+                <input
+                  type="number"
+                  className="input"
+                  placeholder="Price"
+                  name="price"
+                  value={newProduct.price}
+                  onChange={handleChange}
+                />
+              </div>
+              <div className="columns mt-3 is-centered">
+                <div class="file is-centered">
+                  <label class="file-label">
+                    <input
+                      class="file-input"
+                      type="file"
+                      onChange={handlePhoto}
+                      required
+                    />
+                    <span class="file-cta">
+                      <i class="fas fa-upload"></i>
+                      <span class="file-label">Choose a photo...</span>
+                    </span>
+                  </label>
+                </div>
+              </div>
+              <div className="columns is-mobile mt-4 is-centered">
+                <button type="submit" className="button is-success">
+                  Submit
+                </button>
+              </div>
+            </form>
           </div>
-          <div className="columns is-mobile mt-4 is-centered">
-              <button type="submit" className="button is-success">
-                Submit
-              </button>
-            </div>
-        </form>
-      </div>
-    </div>
-    </section>
+        </div>
+      </section>
     </div>
   );
 };

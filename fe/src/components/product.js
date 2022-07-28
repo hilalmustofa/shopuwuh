@@ -38,6 +38,7 @@ const ProductList = () => {
     try {
       await myAxios.delete(baseUrl + `/api/products/${id}`);
       getProducts();
+      window.location.reload();
     } catch (error) {
       console.log(error.response.data.error.message)
       setError(error.response.data.error.message);

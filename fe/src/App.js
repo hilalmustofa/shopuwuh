@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route} from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import ProductList from "./components/product";
@@ -71,10 +71,10 @@ function App() {
         <Route path="/" element={<ProductList />} />
         <Route exact path="/users/login" element={<Login />} />
         <Route exact path="/users/signup" element={<Signup />} />
-        <Route exact path={`/products/add`} element={<AddProduct />} />
+        <Route exact path="/products/add" element={<AddProduct />} />
         <Route exact path="/products/:id" element={<EditProduct />} />
-        <Route exact path="/products/detail/:id" element={<Detail />} />
-        <Route path={"*"} element={<NotFound />} />
+        <Route exact path="/products/detail/:id" element={<Detail />}/>
+        <Route path ="*" element={<NotFound/>}/>
       </Routes>
       ) : (<Loading loading={loading} /> )}
       <footer class="footer">

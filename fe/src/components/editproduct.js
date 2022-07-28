@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import myAxios from "./myAxios";
 import { useNavigate, useParams } from "react-router-dom";
 import baseUrl from "./baseurl";
+import Loading from "./loading";
 
 const EditProduct = () => {
   const params = useParams();
@@ -11,6 +12,11 @@ const EditProduct = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(undefined); 
+
+  useEffect(() => {
+    setTimeout(() => setLoading(true), 650)
+  }, []);
 
   const updateProduct = async (e) => {
     e.preventDefault();
@@ -21,6 +27,7 @@ const EditProduct = () => {
         price
       });
       navigate("/");
+      window.location.reload();
     } catch (error) {
         setError(error.response.data.errors);
     }
@@ -28,6 +35,7 @@ const EditProduct = () => {
 
   return (
     <div>
+      {loading ? ( 
       <section class="section is-mobile">
     <div className="columns mt-0 is-mobile is-centered">
     { error && <div class="notification is-danger is-light"> {error}</div>} 
@@ -81,6 +89,7 @@ const EditProduct = () => {
       </div>
     </div>
     </section>
+    ) : (<Loading loading={loading} /> )}
 </div>
   );
 };

@@ -37,8 +37,10 @@ const AddProduct = () => {
         console.log(res); 
         setTimeout(() => {
           navigate("/");
+          window.location.reload();
         }, 2000); 
       }) 
+      
       .catch((error) => { 
         setError(error.response.data.errors); 
       }); 

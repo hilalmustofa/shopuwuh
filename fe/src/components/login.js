@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import baseUrl from "./baseurl";
+import Loading from "./loading";
 
 
 const Login = () => {
@@ -9,6 +10,11 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
   const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(undefined);
+
+  useEffect(() => {
+    setTimeout(() => setLoading(true), 650)
+  }, []);
 
   const saveUser = (e) => {
     e.preventDefault();
@@ -31,6 +37,7 @@ const Login = () => {
 
   return (
 <div>
+{loading ? ( 
 <section class="section is-mobile">
     <div className="columns is-mobile mt-0 is-centered">
     { error && <div class="notification is-danger is-light"> {error}</div>} 
@@ -75,6 +82,7 @@ const Login = () => {
       </div>
     </div>
     </section>
+    ) : (<Loading loading={loading} /> )}
     </div>
 
   );

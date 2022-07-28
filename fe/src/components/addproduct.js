@@ -1,7 +1,8 @@
-import React, { useState } from "react"; 
+import React, { useState, useEffect } from "react"; 
 import { useNavigate } from "react-router-dom"; 
 import myAxios from "./myAxios"; 
 import baseUrl from "./baseurl"; 
+import Loading from "./loading";
  
 const AddProduct = () => { 
   const [newProduct, setNewProduct] = useState({ 
@@ -10,8 +11,16 @@ const AddProduct = () => {
     description: "", 
     picture: "" 
   }); 
+
+  useEffect(() => {
+    setTimeout(() => setLoading(true), 650)
+
+  }, []);
+
   const navigate = useNavigate(); 
+  const [loading, setLoading] = useState(undefined);
   const [error, setError] = useState(null); 
+  const [success, setSuccess] = useState(null); 
  
   const handleSubmit = (e) => { 
     e.preventDefault(); 
@@ -24,8 +33,11 @@ const AddProduct = () => {
     myAxios 
       .post(baseUrl + "/api/products", formData) 
       .then((res) => { 
+        setSuccess(res.data.message)
         console.log(res); 
-        navigate("/"); 
+        setTimeout(() => {
+          navigate("/");
+        }, 2000); 
       }) 
       .catch((error) => { 
         setError(error.response.data.errors); 
@@ -44,10 +56,12 @@ const AddProduct = () => {
     <div> 
       <section class="section is-mobile"> 
         <div className="columns mt-0 is-mobile is-centered"> 
+        {success && <div class="notification is-primary is-light"> {success}</div>}
           {error && <div class="notification is-danger is-light"> {error}</div>} 
         </div> 
  
         <div className="columns mt-2 is-centered"> 
+        {loading ? ( 
           <div className="columns is-mobile is-centered"> 
             <form onSubmit={handleSubmit} encType="multipart/form-data"> 
               <div className="field"> 
@@ -108,6 +122,7 @@ const AddProduct = () => {
               </div> 
             </form> 
           </div> 
+          ) : (<Loading loading={loading} /> )}
         </div> 
       </section> 
     </div> 

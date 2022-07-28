@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import myAxios from "./myAxios";
 import { useParams } from "react-router-dom";
 import baseUrl from "./baseurl";
+import Loading from "./loading";
 
 const token = localStorage.getItem("token");
 
@@ -9,6 +10,12 @@ const Detail = () => {
   const [products, setProduct] = useState([]);
   const { id } = useParams();
   const [currentUser, setCurrentUser] = useState(undefined);
+  const [loading, setLoading] = useState(undefined);
+  
+
+  useEffect(() => {
+    setTimeout(() => setLoading(true), 650)
+  }, []);
 
   useEffect(() => {
     getProducts();
@@ -48,6 +55,7 @@ const Detail = () => {
         </nav>
       </div>
 
+      {loading ? ( 
       <section class="section pt-0 pb-0">
         <div class="container">
           <div class="columns is-vcentered pt-1 is-multiline">
@@ -87,8 +95,9 @@ const Detail = () => {
           </div>
         </div>
       </section>
-
+   ) : (<Loading loading={loading} /> )}
       <div class="section pt-4 pb-0 pr-6">
+      {loading ? ( 
         <div class="column pl-0 pt-0 pr-8 is-6-tablet is--desktop">
           <h1 class="is-size-6-mobile is-size-5-tablet is-size-8-desktop title mb-0 mt-3">
             Product Description
@@ -127,8 +136,11 @@ const Detail = () => {
             <img src={require("../assets/trivago.png")} />
           </span>
         </div>
+         ) : ("")}
       </div>
-    </div>
+    
+      </div>
+
   );
 };
 export default Detail;

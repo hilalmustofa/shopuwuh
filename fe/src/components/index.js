@@ -7,7 +7,7 @@ export const NotFound = () => {
     <div>
       <div class="container mt-4 is-mobile has-text-centered">
       <div class="column is-8-mobile is-6-tablet is-4-desktop has-text-centered">
-    <img src="https://i.imgur.com/KxM9gNT.png"/>
+    <img src={require("../assets/404.png")}/>
     <div className="columns mt-0 is-centered">
     <p>Page not found</p>
     </div>

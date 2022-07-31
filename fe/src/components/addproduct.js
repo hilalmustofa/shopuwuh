@@ -107,6 +107,7 @@ const AddProduct = () => {
                     <input 
                       class="file-input" 
                       type="file" 
+                      accept="image/*"
                       onChange={handlePhoto} 
                       required 
                     /> 

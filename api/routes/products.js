@@ -24,12 +24,33 @@ const storage = multer.diskStorage({
   },
 });
 
-const fileFilter = (req, file, cb) => {
+function handleUploadError(multerUploadFunction) {
+  return (req, res, next) =>
+    multerUploadFunction(req, res, err => {
+      // handle Multer error
+      if (err && err.name && err.name === 'MulterError') {
+        return res.status(500).send({
+          error: err.name,
+          message: `File upload error: ${err.message}`,
+        });
+      }
+      // handle other errors
+      if (err) {
+        return res.status(422).send({
+          error: 'file upload error',
+          message: `File format is not supported, gambar wae nde max 5mb`,
+        });
+      }
+      next();
+    });
+}
+
+const uploadFilter = (req, file, cb) => {
   if (file.mimetype == "image/jpeg" || file.mimetype === "image/png") {
     cb(null, true);
   } else {
     cb(null, false);
-    return cb(new Error("File format not supported, gambar wae nde, max 5mb"));
+    return cb(new Error("invalid mimtype"));
   }
 };
 const upload = multer({
@@ -37,8 +58,10 @@ const upload = multer({
   limits: {
     fileSize: 1024 * 1024 * 5,
   },
-  fileFilter: fileFilter,
+  fileFilter: uploadFilter,
 });
+
+const checkFile = handleUploadError(upload.single('picture'));
 
 router.get("/", (req, res, next) => {
   Product.find()
@@ -67,57 +90,58 @@ router.get("/", (req, res, next) => {
     });
 });
 
-router.post("/", 
-[checkAuth, upload.single("picture"),
-check("name", "name length should be 5 to 50 characters").isLength({
-  min: 4,
-  max: 50,
-}),
-check("description", "price length should be 3 to 20 characters").isLength({
-  min: 3,
-  max: 200,
-}),
-check("price", "price length should be 3 to 20 characters").isLength({
-  min: 3,
-  max: 20,
-}),
-], (req, res) => {
-  const errors = validationResult(req);
+router.post("/",
+  [checkAuth, checkFile,
+    check("name", "name length should be 3 to 50 characters").isLength({
+      min: 3,
+      max: 50,
+    }),
+    check("description", "price length should be 3 to 20 characters").isLength({
+      min: 3,
+      max: 200,
+    }),
+    check("price", "price length should be 3 to 20 characters").isLength({
+      min: 3,
+      max: 20,
+    }),
+  ],
+  (req, res) => {
+    const errors = validationResult(req);
 
-  if (!errors.isEmpty()) {
-    return res.status(400).json({
-      success: false,
-      errors: "Name or Price should be at least 3 chars and max 50 chars",
-    });
-  }
-
-  const product = new Product({
-    _id: new mongoose.Types.ObjectId(),
-    product: new mongoose.Types.ObjectId(),
-    name: req.body.name,
-    description: req.body.description,
-    price: formatRupiah(req.body.price),
-    picture: req.file.path,
-  });
-  product
-    .save()
-    .then((result) => {
-      console.log(result);
-      res.status(201).json({
-        message: "Product created successfully",
-        product: {
-          id: result.id,
-          name: result.name,
-          description: result.description,
-          price: result.price,
-          picture: "https://shopuwuh.herokuapp.com/" + result.picture,
-        },
+    if (!errors.isEmpty()) {
+      return res.status(400).json({
+        success: false,
+        error: "Minimal chars is 3 for all fields",
       });
-    })
-    .catch((error) => {
-      console.log(error);
+    }
+
+    const product = new Product({
+      _id: new mongoose.Types.ObjectId(),
+      product: new mongoose.Types.ObjectId(),
+      name: req.body.name,
+      description: req.body.description,
+      price: formatRupiah(req.body.price),
+      picture: req.file.path,
     });
-});
+    product
+      .save()
+      .then((result) => {
+        console.log(result);
+        res.status(201).json({
+          message: "Product created successfully",
+          product: {
+            id: result.id,
+            name: result.name,
+            description: result.description,
+            price: result.price,
+            picture: "https://shopuwuh.herokuapp.com/" + result.picture,
+          },
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  });
 
 router.get("/:id", (req, res, next) => {
   const id = req.params.id;
@@ -147,7 +171,7 @@ router.put(
   checkAuth,
   [
     check("name", "name length should be 5 to 50 characters").isLength({
-      min: 5,
+      min: 3,
       max: 50,
     }),
     check("price", "price length should be 3 to 20 characters").isLength({
@@ -161,7 +185,7 @@ router.put(
     if (!errors.isEmpty()) {
       return res.status(400).json({
         success: false,
-        errors: "Name or Price should be at least 3 chars and max 50 chars",
+        errors: "Minimal chars is 3 for all fields",
       });
     }
 

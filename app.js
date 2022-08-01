@@ -38,5 +38,4 @@ app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, '/fe/build/index.html'));
 });
 
-
 module.exports = app;

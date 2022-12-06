@@ -6,6 +6,14 @@ const Product = require("../models/product");
 const multer = require("multer");
 require("dotenv").config();
 const checkAuth = require("../middleware/check-auth");
+const rateLimit = require('express-rate-limit')
+
+const apiLimiter = rateLimit({
+	windowMs: 3 * 60 * 1000, // 3 minutes
+	max: 9, // Limit each IP to 100 requests per `window` (here, per 15 minutes)
+	standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
+	legacyHeaders: false, // Disable the `X-RateLimit-*` headers
+})
 
 const formatRupiah = (money) => {
   return new Intl.NumberFormat("id-ID", {
@@ -90,7 +98,7 @@ router.get("/", (req, res, next) => {
     });
 });
 
-router.post("/",
+router.post("/",apiLimiter,
   [checkAuth, checkFile,
     check("name", "name length should be 3 to 50 characters").isLength({
       min: 3,

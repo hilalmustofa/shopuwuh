@@ -1,4 +1,4 @@
 const baseUrl = process.env.NODE_ENV === "production"
-    ? "http://akuntesterwork-001-site1.ctempurl.com"
-    : "http://akuntesterwork-001-site1.ctempurl.com";
+    ? "https://average-ruby-narwhal.cyclic.app"
+    : "https://average-ruby-narwhal.cyclic.app";
 export default baseUrl;

@@ -5,6 +5,10 @@ import { Link } from "react-router-dom";
 import baseUrl from "./baseurl";
 
 
+const api = axios.create({
+  baseURL: 'http://akuntesterwork-001-site1.ctempurl.com/api',
+});
+
 const token = localStorage.getItem('token');
 
 const ProductList = () => {
@@ -29,7 +33,7 @@ const ProductList = () => {
   };
 
   const getProducts = async () => {
-    const response = await axios.get(baseUrl + "/api/products");
+    const response = await api(baseUrl + "/api/products");
     setProduct(response.data.products);
   };
 

@@ -1,16 +1,19 @@
 import React, { useState, useEffect } from "react";
-import myAxios from "./myAxios";
+import axios from "axios";
 import { useParams } from "react-router-dom";
 import baseUrl from "./baseurl";
 import Loading from "./loading";
 
 const token = localStorage.getItem("token");
-
+const api = axios.create({
+  baseURL: 'http://akuntesterwork-001-site1.ctempurl.com/api',
+});
 const Detail = () => {
   const [products, setProduct] = useState([]);
   const { id } = useParams();
   const [currentUser, setCurrentUser] = useState(undefined);
   const [loading, setLoading] = useState(undefined);
+  
   
 
   useEffect(() => {
@@ -34,7 +37,7 @@ const Detail = () => {
   };
 
   const getProducts = async () => {
-    const response = await myAxios.get(baseUrl + `/api/products/${id}`);
+    const response = await api(baseUrl + `/api/products/${id}`);
     setProduct(response.data.product);
   };
 
